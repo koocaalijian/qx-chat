@@ -3,6 +3,14 @@
  */
 var io = require('socket.io')();
 var xssEscape = require('xss-escape');
+var redis = require("redis");
+var moment = require("moment");
+
+client = redis.createClient();
+
+client.on("error", function (err) {
+    console.log("Error " + err);
+});
 
 var nickname_list = [];
 
@@ -26,9 +34,7 @@ io.on('connection', function (_socket) {
     console.log(_socket.id + ': connection');
     _socket.emit('user_list', nickname_list);
     _socket.emit('need_nickname');
-    _socket.emit('server_message', '欢迎来到千寻聊天室~<br/>' +
-        '本聊天室源代码<a href="https://github.com/coofly/qx-chat" target="_blank">' +
-        'https://github.com/coofly/qx-chat</a>，欢迎Star！');
+    _socket.emit('server_message', '欢迎来到复旦聊天室~<br/>');
 
     _socket.on('disconnect', function () {
         console.log(_socket.id + ': disconnect');
@@ -78,7 +84,10 @@ io.on('connection', function (_socket) {
             return _socket.emit('need_nickname');
         }
         _content = _content.trim();
-        console.log(_socket.nickname + ': say(' + _content + ')');
+
+		client.rpush("messages", moment().format('YYYY-MM-DD hh:mm:ss') + " - " + _socket.nickname + " - " + _content);
+
+        console.log(moment().format('YYYY-MM-DD hh:mm:ss') + _socket.nickname + ': say(' + _content + ')');
         _socket.broadcast.emit('user_say', _socket.nickname, xssEscape(_content));
         return _socket.emit('say_done', _socket.nickname, xssEscape(_content));
     });
