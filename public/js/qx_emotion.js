@@ -35,6 +35,8 @@
 			if(undefined != QxEmotion.data[emotion_name]){
 				emotion_path = QxEmotion.path + QxEmotion.data[emotion_name];
 				_text = _text.replace(re_ret[0], '<img src="' + emotion_path + '" atl="' + emotion_name + '">');
+			}else{
+				_text = _text.replace(re_ret[0], '<img src="' + re_ret[1] + '">');
 			}
 		}
 		return _text;
