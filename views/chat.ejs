@@ -54,7 +54,7 @@
                     <button class="btn btn-default" id="emotion-btn" type="button">
                         <img src="/img/emotion_smile.png" style="width:24px;height:24px;">
                     </button>
-					<button class="btn btn-default" id="image-btn" type="button" onclick="window.open('/uploaded_datas')">
+					<button class="btn btn-default" id="image-btn" type="button" data-toggle="modal" href="#picture-modal">
                         <img src="/img/picture_add.png" style="width:24px;height:24px;">
                     </button>
                 </span>
@@ -138,6 +138,40 @@
     </div>
 </div>
 
+<div class="modal fade" id="picture-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only"></span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">请上传图片</h4>
+            </div>
+
+			<form accept-charset="UTF-8" action="/uploaded_datas" class="new_uploaded_data" data-async data-target="#picture-modal" id="new_uploaded_data" method="post"><div style="margin:0;padding:0;display:inline"></div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-push-2">
+                        <div class="alert alert-danger" role="alert" style="display: none">
+                            <span class="glyphicon glyphicon-remove"></span>
+                            请上传
+                        </div>
+                        <div class="input-group">
+                            <input id="uploaded_data_image" name="uploaded_data[image]" type="file">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="$('#new_uploaded_data').submit();">上传</button>
+            </div>
+
+			</form>
+        </div>
+    </div>
+</div>
+
 <script src="http://libs.useso.com/js/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script src="http://libs.useso.com/js/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -147,5 +181,37 @@
 <script src="/js/qx_emotion.js"></script>
 <script src="/js/qx_chat_socket.js"></script>
 <script src="/js/qx_chat_ui.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+	    $('form[data-async]').on('submit', function(event) {
+	        var $form = $(this);
+	        var $target = $($form.attr('data-target'));
+
+			var formData = new FormData(this);
+
+	        $.ajax({
+	            type: $form.attr('method'),
+	            url: $form.attr('action'),
+	            data: formData,
+				contentType: false,
+				processData: false,
+
+	            success: function(data, status) {
+					if(data.success == true){
+						$target.modal('hide');
+						$("#input-edit").val($("#input-edit").val()+data.uploaded_data_path);
+						$("#input-edit").focus();
+					}else{
+						alert(data.msg);
+					}
+	            }
+	        });
+
+	        event.preventDefault();
+	    });
+	});
+</script>
+
 </body>
 </html>
