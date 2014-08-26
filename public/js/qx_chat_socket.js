@@ -15,7 +15,7 @@ socket.on('need_nickname', function () {
 });
 
 socket.on('server_message', function (_message) {
-    addServerMessage(getLocalHMS(), _message);
+    // addServerMessage(getLocalHMS(), _message);
 });
 
 socket.on('change_nickname_error', function (_error_msg) {
@@ -33,7 +33,7 @@ socket.on('change_nickname_done', function (_old_name, _new_nickname) {
     $('#my-nickname').html('昵称：' + _new_nickname);
 
     if (_old_name != null && _old_name != "") {
-        addServerMessage(getLocalHMS(), '[' + _old_name + '] 改名为 [' + _new_nickname + ']');
+        // addServerMessage(getLocalHMS(), '[' + _old_name + '] 改名为 [' + _new_nickname + ']');
     }
     updateListCount();
 });
@@ -51,21 +51,21 @@ socket.on('user_change_nickname', function (_old_nick_name, _new_nick_name) {
     // console.log('user_change_nickname(' + _old_nick_name + ', ' + _new_nick_name + ')');
     removeListUser(_old_nick_name);
     addUserToList(_new_nick_name);
-    addServerMessage(getLocalHMS(), '[' + _old_nick_name + '] 改名为 [' + _new_nick_name + ']');
+    // addServerMessage(getLocalHMS(), '[' + _old_nick_name + '] 改名为 [' + _new_nick_name + ']');
 });
 
 socket.on('user_join', function (_nick_name) {
     // console.log('user_join(' + _nick_name + ')');
     addUserToList(_nick_name);
     updateListCount();
-    addServerMessage(getLocalHMS(), '[' + _nick_name + '] 进入了聊天室。');
+    // addServerMessage(getLocalHMS(), '[' + _nick_name + '] 进入了聊天室。');
 });
 
 socket.on('user_quit', function (_nick_name) {
     // console.log('user_quit(' + _nick_name + ')');
     removeListUser(_nick_name);
     updateListCount();
-    addServerMessage(getLocalHMS(), '[' + _nick_name + '] 离开了聊天室。');
+    // addServerMessage(getLocalHMS(), '[' + _nick_name + '] 离开了聊天室。');
 });
 
 socket.on('user_say', function (_nick_name, _content) {
@@ -73,7 +73,7 @@ socket.on('user_say', function (_nick_name, _content) {
     addMessage(_nick_name, getLocalHMS(), _content);
     if ("hidden" == document[GetVisibilityKey()]) {
 	    Notify.show({icon:'/img/qx_chat.png',
-		    'title':'千寻聊天室',
+		    'title':'复旦聊天室',
 		    'message':_nick_name + '：' + _content,
 		    'autoclose':3,
             'onclick': function () {

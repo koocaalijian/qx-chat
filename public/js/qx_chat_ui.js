@@ -13,9 +13,9 @@ function addMessage(_name, _time, _content) {
 	_content = QxEmotion.Parse(_content);
     msg_list.append(
             '<div class="clearfix msg-wrap"><div class="msg-head">' +
-            '<span class="msg-name label label-primary pull-left">' +
+            '<span class="msg-name label pull-left">' +
             '<span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;' + _name + '</span>' +
-            '<span class="msg-time label label-default pull-left">' +
+            '<span class="msg-time label pull-left">' +
             '<span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;' + _time + '</span>' +
             '</div><div class="msg-content">' + _content + '</div></div>'
     );
@@ -27,9 +27,9 @@ function addServerMessage(_time, _content) {
 	_content = QxEmotion.Parse(_content);
     msg_list.append(
             '<div class="clearfix msg-wrap"><div class="msg-head">' +
-            '<span class="msg-name label label-danger pull-left">' +
+            '<span class="msg-name label pull-left">' +
             '<span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;系统消息</span>' +
-            '<span class="msg-time label label-default pull-left">' +
+            '<span class="msg-time label pull-left">' +
             '<span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;' + _time + '</span>' +
             '</div><div class="msg-content">' + _content + '</div></div>'
     );
