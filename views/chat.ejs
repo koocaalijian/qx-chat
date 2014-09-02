@@ -54,6 +54,7 @@
                     <button class="btn btn-default" id="emotion-btn" type="button">
                         <img src="/img/emotion_smile.png" style="width:24px;height:24px;">
                     </button>
+
 					<button class="btn btn-default" id="image-btn" type="button" data-toggle="modal" href="#picture-modal">
                         <img src="/img/picture_add.png" style="width:24px;height:24px;">
                     </button>
@@ -172,6 +173,29 @@
     </div>
 </div>
 
+<div class="modal fade text-center" id="image-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="display: inline-block; width: auto;">
+        <div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">浏览图片</h4>
+			</div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div id="image-modal-file">
+                        
+                    </div>
+                </div>
+            </div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+        </div>
+    </div>
+</div>
+
 <script src="http://libs.useso.com/js/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script src="http://libs.useso.com/js/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -211,6 +235,16 @@
 	        event.preventDefault();
 	    });
 	});
+	
+	function load_image(path){
+		var original_path = path.replace("/thumb/", "/original/");
+		$("#image-modal-file").html("<img src='"+original_path+"'>");
+		$("#image-modal").modal().css({
+		    'margin-top': function () {
+		        return 0;
+		    }
+		});
+	}
 </script>
 
 </body>
